@@ -1,120 +1,963 @@
 <!DOCTYPE html>
-
-<!-- 
-  To change the theme, change the class on the html tag below to one of:
-  - theme-auto: Automatically switches based on user's system preferences
-  - theme-light: Forces light theme
-  - theme-dark: Forces dark theme
--->
-
-<html class="theme-auto" lang="en"> <!-- Update`class="theme-auto" with your preference -->
-
-  <head>
+<html lang="de">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-    <!-- Page Title - Change this to your name/brand (50-60 characters recommended) -->
     <title>Flockii69</title>
-    <link rel="icon" type="image/x-icon" href="/images/avatar.jpg"> <!-- Update this with your own favicon -->
-    
-    <!-- Meta Description - Write a description (150-160 characters recommended) -->
-    <meta name="description" content="Replace this with your own, this appears in search results and when sharing.">
-    
-    <!-- Keywords -->
-    <meta name="keywords" content="Florian Feka, industry, and specialties">
-    
-    <!-- Canonical URL - Helps prevent duplicate content issues -->
-    <meta rel="canonical" href="https://yourwebsite.com">
-    
-    <!-- Author Information -->
-    <meta name="author" content="Your Name">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/brands.css">
-  
-  </head>
-
+    <link rel="icon" type="image/x-icon" href="images/avatar.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <style>
+        :root {
+            --neon-blue: #00f7ff;
+            --neon-pink: #ff007f;
+            --neon-purple: #a259ff;
+            --neon-green: #39ff14;
+            --neon-orange: #ffb347;
+            --neon-yellow: #fff700;
+            --neon-red: #ff3131;
+            --dark-bg: #181828;
+            --card-bg: #23233a;
+            --text-light: #fff;
+            --text-muted: #bdbdbd;
+            --glass-bg: rgba(35,35,58,0.85);
+            --glass-bg-strong: rgba(35,35,58,0.96);
+            --blur: 24px;
+            --shadow-xl: 0 12px 48px 0 rgba(0,0,0,0.35);
+            --shadow-glow: 0 0 64px 16px var(--neon-blue), 0 0 64px 32px var(--neon-pink);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: radial-gradient(ellipse at 10% 0%, var(--neon-blue) 0%, transparent 70%),
+                        radial-gradient(ellipse at 90% 100%, var(--neon-pink) 0%, transparent 70%),
+                        linear-gradient(120deg, var(--dark-bg) 0%, #23233a 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.7s cubic-bezier(.77,0,.18,1.01);
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.5rem 2.5rem 0.5rem 2.5rem;
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(90deg, rgba(0,247,255,0.13) 0%, rgba(255,0,127,0.13) 100%);
+            box-shadow: 0 2px 32px 0 rgba(0,0,0,0.18);
+            border-bottom: 2px solid var(--neon-blue);
+            backdrop-filter: blur(var(--blur));
+            animation: fadeInDown 1.8s cubic-bezier(.77,0,.18,1.01);
+        }
+        .clock {
+            color: var(--neon-pink);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px var(--neon-blue);
+            margin-right: 1.5rem;
+            user-select: none;
+            min-width: 120px;
+            text-align: left;
+            animation: fadeInLeft 1.8s cubic-bezier(.77,0,.18,1.01);
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-80px);}
+            to { opacity: 1; transform: translateX(0);}
+        }
+        .color-dropdown-btn, .dark-toggle {
+            box-shadow: 0 2px 12px var(--neon-blue);
+            transition: box-shadow 0.5s cubic-bezier(.77,0,.18,1.01), background 0.4s, border 0.4s;
+        }
+        .color-dropdown-btn:hover, .dark-toggle:hover {
+            box-shadow: 0 4px 32px var(--neon-pink), 0 2px 12px var(--neon-blue);
+        }
+        header {
+            background: linear-gradient(120deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease-in-out infinite alternate;
+            color: #fff;
+            text-align: center;
+            padding: 4.5rem 1rem 2.5rem 1rem;
+            border-bottom-left-radius: 80px;
+            border-bottom-right-radius: 80px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: fadeInHeader 2s cubic-bezier(.77,0,.18,1.01);
+        }
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%;}
+            100% {background-position: 100% 50%;}
+        }
+        @keyframes fadeInHeader {
+            from { opacity: 0; transform: scale(0.98) translateY(-80px);}
+            to { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        header h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 2.5px;
+            margin-bottom: 0.7rem;
+            text-shadow: 0 4px 32px var(--neon-blue), 0 2px 12px var(--neon-pink);
+            animation: fadeInDown 1.5s cubic-bezier(.77,0,.18,1.01);
+        }
+        header p {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var (--text-light);
+            animation: fadeInUp 1.5s cubic-bezier(.77,0,.18,1.01);
+        }
+        .main-section {
+            max-width: 650px;
+            margin: 3.5rem auto 2.5rem auto;
+            background: var(--glass-bg-strong);
+            border-radius: 48px;
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+            padding: 3rem 2.2rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 2s cubic-bezier(.77,0,.18,1.01), floatSection 8s ease-in-out infinite alternate;
+            backdrop-filter: blur(var(--blur));
+        }
+        .avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            box-shadow: 0 16px 64px var(--neon-blue), 0 4px 32px var(--neon-pink), 0 0 0 16px rgba(0,247,255,0.13);
+            margin-bottom: 1.8rem;
+            object-fit: cover;
+            border: 7px solid var(--neon-pink);
+            animation: avatarGlow 3.2s cubic-bezier(.77,0,.18,1.01) infinite alternate, neonPulse 4s infinite, avatarBorderGlow 2.5s infinite alternate;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-pink) 100%);
+            transition: box-shadow 0.6s, border 0.5s;
+        }
+        @keyframes avatarGlow {
+            0% { box-shadow: 0 16px 64px var(--neon-blue), 0 4px 32px var(--neon-pink), 0 0 0 16px rgba(0,247,255,0.13);}
+            100% { box-shadow: 0 32px 128px var(--neon-pink), 0 8px 64px var(--neon-blue), 0 0 0 32px rgba(255,0,127,0.13);}
+        }
+        @keyframes neonPulse {
+            0% { filter: brightness(1) drop-shadow(0 0 16px var(--neon-blue)); }
+            50% { filter: brightness(1.3) drop-shadow(0 0 48px var(--neon-pink)); }
+            100% { filter: brightness(1) drop-shadow(0 0 16px var(--neon-blue)); }
+        }
+        .avatar:hover {
+            border: 7px solid var(--neon-blue);
+            box-shadow: 0 32px 128px var(--neon-pink), 0 8px 64px var(--neon-blue), 0 0 0 40px rgba(0,247,255,0.18);
+            filter: brightness(1.15) saturate(1.3);
+            transition: box-shadow 0.6s, border 0.5s, filter 0.5s;
+        }
+        .main-section h1 {
+            color: var(--neon-blue);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.7rem;
+            letter-spacing: 1.7px;
+        }
+        .main-section .desc {
+            margin-bottom: 1.8rem;
+            font-size: 1.18rem;
+            color: var(--neon-purple);
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-shadow: 0 2px 12px var(--neon-blue);
+            animation: fadeInUp 1.5s cubic-bezier(.77,0,.18,1.01);
+        }
+        .button-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin: 2.5rem 0;
+        }
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            border: none;
+            border-radius: 22px;
+            padding: 1.2rem 2rem;
+            font-size: 1.18rem;
+            font-weight: 700;
+            box-shadow: 0 2px 20px var(--neon-blue), 0 2px 10px var(--neon-pink);
+            text-decoration: none;
+            transition: 
+                transform 0.5s cubic-bezier(.77,0,.18,1.01),
+                box-shadow 0.5s,
+                background 0.5s,
+                color 0.5s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 1;
+            animation: fadeInBtn 1.4s cubic-bezier(.77,0,.18,1.01);
+        }
+        .button::before {
+            content: "";
+            position: absolute;
+            left: -90%;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(0,247,255,0.22) 0%, rgba(255,0,127,0.18) 100%);
+            transform: skewX(-20deg);
+            transition: left 0.8s cubic-bezier(.77,0,.18,1.01);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .button:hover::before {
+            left: 120%;
+        }
+        .button > * {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes fadeInBtn {
+            0% { opacity: 0; transform: translateY(80px) scale(0.9);}
+            60% { opacity: 1; transform: translateY(-8px) scale(1.05);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
+        }
+        .button.hide {
+            opacity: 0 !important;
+            pointer-events: none;
+            transform: scale(0.95) translateY(20px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .button:hover, .button:focus {
+            transform: translateY(-12px) scale(1.11) rotate(-2deg);
+            box-shadow: 0 16px 64px var(--neon-pink), 0 4px 32px var(--neon-blue);
+            background: linear-gradient(90deg, var(--neon-pink) 10%, var(--neon-blue) 90%);
+            color: var(--neon-blue);
+            outline: none;
+            animation: pulse 0.8s;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 var(--neon-pink);}
+            70% { box-shadow: 0 0 32px 16px var(--neon-pink);}
+            100% { box-shadow: 0 16px 64px var(--neon-pink), 0 4px 32px var(--neon-blue);}
+        }
+        .search-bar {
+            margin: 2rem 0 2.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(90deg, rgba(0,247,255,0.22) 0%, rgba(255,0,127,0.17) 100%);
+            border-radius: 36px;
+            box-shadow: 0 0 48px 16px var(--neon-blue), 0 0 96px 32px var(--neon-pink);
+            padding: 1.1rem 2rem;
+            transition: box-shadow 0.5s, background 0.5s;
+            backdrop-filter: blur(var(--blur));
+            min-width: 320px;
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 3px solid var(--neon-blue);
+            animation: searchBarGlow 4s infinite alternate cubic-bezier(.77,0,.18,1.01);
+        }
+        @keyframes searchBarGlow {
+            0% {
+                box-shadow: 0 0 48px 16px var(--neon-blue), 0 0 96px 32px var(--neon-pink);
+                border-color: var(--neon-blue);
+            }
+            100% {
+                box-shadow: 0 0 96px 32px var(--neon-pink), 0 0 64px 24px var(--neon-blue);
+                border-color: var(--neon-pink);
+            }
+        }
+        .search-bar input {
+            padding: 1.2rem 2rem;
+            border-radius: 24px 0 0 24px;
+            border: none;
+            font-size: 1.22rem;
+            outline: none;
+            width: 70%;
+            max-width: 340px;
+            background: rgba(35,35,58,0.98);
+            color: var(--text-light);
+            box-shadow: 0 0 24px 8px var(--neon-blue), 0 0 48px 16px var(--neon-pink);
+            border-right: 3px solid var(--neon-pink);
+            transition: box-shadow 0.4s, background 0.4s, border 0.4s;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 64px 24px var(--neon-pink), 0 0 32px 8px var(--neon-blue);
+            background: rgba(0,247,255,0.22);
+            border-right: 3px solid var(--neon-blue);
+        }
+        .search-bar button {
+            padding: 1.2rem 2rem;
+            border-radius: 0 24px 24px 0;
+            border: none;
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            font-size: 1.22rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: background 0.4s, color 0.4s, box-shadow 0.4s;
+            box-shadow: 0 0 32px 12px var(--neon-blue), 0 0 48px 16px var(--neon-pink);
+            letter-spacing: 1.2px;
+            outline: none;
+            border-left: 3px solid var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .search-bar button:hover, .search-bar button:focus {
+            background: linear-gradient(90deg, var(--neon-pink) 10%, var(--neon-blue) 90%);
+            color: var(--neon-blue);
+            box-shadow: 0 0 64px 24px var(--neon-pink), 0 0 32px 8px var(--neon-blue);
+            border-left: 3px solid var(--neon-pink);
+        }
+        .search-bar input::placeholder {
+            color: var(--neon-blue);
+            opacity: 0.8;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+        }
+        .suggestions {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 0 48px 16px var(--neon-blue), 0 0 32px 12px var(--neon-pink);
+            z-index: 2;
+            max-height: 260px;
+            overflow-y: auto;
+            display: none;
+            animation: fadeInUp 0.7s cubic-bezier(.77,0,.18,1.01), suggestionsGlow 4s infinite alternate cubic-bezier(.77,0,.18,1.01);
+            border-top: 3px solid var(--neon-blue);
+            margin-top: 2px;
+        }
+        @keyframes suggestionsGlow {
+            0% {
+                box-shadow: 0 0 48px 16px var(--neon-blue), 0 0 32px 12px var(--neon-pink);
+            }
+            100% {
+                box-shadow: 0 0 64px 24px var(--neon-pink), 0 0 48px 16px var(--neon-blue);
+            }
+        }
+        .suggestion-item {
+            padding: 1.1rem 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, padding 0.3s;
+            font-size: 1.15rem;
+            animation: fadeInUp 0.7s cubic-bezier(.77,0,.18,1.01), neonPulse 4s infinite;
+            border-bottom: 1px solid rgba(0,247,255,0.09);
+        }
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        .suggestion-item:hover, .suggestion-item.active {
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            padding-left: 2.5rem;
+        }
+        .copy-info {
+            margin-top: 1.2rem;
+            color: var(--neon-pink);
+            font-size: 1.1rem;
+            display: none;
+            animation: fadeInUp 0.6s, neonPulse 4s infinite;
+        }
+        .scroll-top {
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            background: var(--neon-blue);
+            color: #181828;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 4px 32px var(--neon-pink);
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s, background 0.3s;
+            z-index: 100;
+        }
+        .scroll-top.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: popIn 0.7s cubic-bezier(.77,0,.18,1.01);
+        }
+        .scroll-top:hover {
+            background: var(--neon-pink);
+            color: #fff;
+        }
+        .tools {
+            margin-top: 2.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: center;
+            animation: fadeInScale 1.5s cubic-bezier(.77,0,.18,1.01);
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        .thanks {
+            margin-top: 2.7rem;
+            color: var(--neon-blue);
+            font-size: 1.18rem;
+            letter-spacing: 1.2px;
+            animation: fadeInUp 1.5s cubic-bezier(.77,0,.18,1.01);
+            position: relative;
+            overflow: visible;
+        }
+        .thanks::after {
+            content: "✨";
+            position: absolute;
+            right: -1.5em;
+            top: 0;
+            font-size: 1.3em;
+            animation: sparkle 2.5s infinite linear;
+            opacity: 0.7;
+        }
+        @keyframes sparkle {
+            0% { opacity: 0.7; transform: scale(1) rotate(0deg);}
+            50% { opacity: 1; transform: scale(1.3) rotate(20deg);}
+            100% { opacity: 0.7; transform: scale(1) rotate(0deg);}
+        }
+        footer {
+            background: linear-gradient(90deg, #23233a 60%, #1e1e2f 100%);
+            color: #fff;
+            text-align: center;
+            padding: 2.2rem 1rem 1.2rem 1rem;
+            margin-top: 2.5rem;
+            border-top-left-radius: 48px;
+            border-top-right-radius: 48px;
+            box-shadow: 0 -4px 48px rgba(0,0,0,0.30);
+            font-size: 1.13rem;
+            letter-spacing: 1.1px;
+            animation: fadeInUp 1.5s cubic-bezier(.77,0,.18,1.01);
+        }
+        footer a {
+            color: var(--neon-blue);
+            text-decoration: underline;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-60px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(60px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 700px) {
+            .topbar { flex-direction: column; gap: 0.5rem; padding: 1rem 0.5rem 0.5rem 0.5rem;}
+            .clock { margin-right: 0; margin-bottom: 0.5rem;}
+            header h1 { font-size: 2rem; }
+            .main-section { padding: 1.5rem 0.7rem; }
+            .avatar { width: 90px; height: 90px; }
+            .button { font-size: 1rem; padding: 0.8rem 1.2rem; }
+            .dark-toggle { width: 36px; height: 36px; }
+            .scroll-top { right: 12px; bottom: 12px; width: 40px; height: 40px; font-size: 1.3rem; }
+        }
+        /* Kombinierter Theme-Switcher */
+        .theme-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: var(--glass-bg);
+            border: 2.5px solid var(--neon-pink);
+            border-radius: 28px;
+            padding: 0.5rem 1.3rem;
+            box-shadow: 0 2px 16px var(--neon-blue);
+            cursor: pointer;
+            transition: box-shadow 0.4s, border 0.4s, background 0.4s;
+            position: relative;
+            user-select: none;
+        }
+        .theme-switcher:hover {
+            box-shadow: 0 4px 32px var(--neon-pink), 0 2px 12px var(--neon-blue);
+            border-color: var(--neon-blue);
+            background: var(--glass-bg-strong);
+        }
+        .theme-switcher .theme-icon {
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            transition: color 0.3s;
+        }
+        .theme-switcher .theme-label {
+            font-weight: 700;
+            color: var(--text-light);
+            font-size: 1.07rem;
+            letter-spacing: 1px;
+            margin-right: 0.5rem;
+        }
+        .theme-switcher .color-picker-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.7rem;
+            margin-top: 0.1rem;
+            position: relative;
+            cursor: pointer;
+        }
+        .theme-switcher .color-picker {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+            appearance: none;
+            outline: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            z-index: 2;
+        }
+        .theme-switcher .color-picker-emoji {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 0 3px var(--neon-pink), 0 2px 16px var(--neon-blue), 0 0 16px 2px var(--neon-pink);
+            pointer-events: none;
+            transition: border 0.3s, box-shadow 0.4s, background 0.3s, transform 0.3s;
+            z-index: 1;
+            user-select: none;
+        }
+        .theme-switcher .color-picker:focus + .color-picker-emoji,
+        .theme-switcher .color-picker:hover + .color-picker-emoji {
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 0 5px var(--neon-blue), 0 0 32px 8px var(--neon-pink);
+            transform: scale(1.13) rotate(-6deg);
+            background: linear-gradient(135deg, #fff 0%, #eee 100%);
+        }
+        .theme-switcher .mode-toggle {
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-pink) 100%);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+            font-size: 1.35rem;
+            color: #181828;
+            box-shadow: 0 2px 16px var(--neon-blue), 0 0 0 3px var(--neon-pink);
+            cursor: pointer;
+            transition: 
+                background 0.4s, 
+                color 0.4s, 
+                box-shadow 0.4s, 
+                transform 0.3s cubic-bezier(.77,0,.18,1.01);
+            outline: none;
+            position: relative;
+            z-index: 2;
+        }
+        .theme-switcher .mode-toggle:hover, 
+        .theme-switcher .mode-toggle:focus {
+            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-blue) 100%);
+            color: var(--neon-yellow);
+            box-shadow: 0 0 0 6px var(--neon-blue), 0 0 32px 8px var(--neon-pink);
+            transform: scale(1.13) rotate(-8deg);
+        }
+        .theme-switcher .mode-toggle .fa-moon,
+        .theme-switcher .mode-toggle .fa-sun {
+            transition: transform 0.5s cubic-bezier(.77,0,.18,1.01), color 0.4s;
+        }
+        .theme-switcher .mode-toggle .fa-sun {
+            color: var(--neon-yellow);
+            text-shadow: 0 0 8px var(--neon-yellow), 0 0 16px var(--neon-pink);
+        }
+        .theme-switcher .mode-toggle .fa-moon {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue), 0 0 16px var(--neon-pink);
+        }
+        .dev-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            font-weight: 900;
+            font-size: 1em;
+            padding: 0.18em 0.7em;
+            border-radius: 1em;
+            margin-left: 0.6em;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
+            text-shadow: 0 1px 8px var(--neon-blue);
+            vertical-align: middle;
+            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
+        }
+        @keyframes badgePop {
+            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
+            60% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+        @keyframes avatarBorderGlow {
+            0% { box-shadow: 0 0 0 8px rgba(0,247,255,0.18), 0 0 32px 8px var(--neon-blue), 0 0 64px 16px var(--neon-pink);}
+            100% { box-shadow: 0 0 0 16px rgba(255,0,127,0.13), 0 0 48px 16px var(--neon-pink), 0 0 96px 32px var(--neon-blue);}
+        }
+        @keyframes floatSection {
+            0% { transform: translateY(0);}
+            50% { transform: translateY(-12px);}
+            100% { transform: translateY(0);}
+        }
+        .profile-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2em;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
+            color: var(--neon-blue);
+            text-shadow: 0 2px 12px var(--neon-pink);
+            letter-spacing: 1.1px;
+            flex-wrap: wrap;
+        }
+        .profile-age {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            padding: 0.18em 0.9em;
+            border-radius: 1em;
+            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
+            font-size: 1.08em;
+            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
+        }
+        .profile-age i {
+            color: var(--neon-yellow);
+            margin-right: 0.3em;
+            font-size: 1.1em;
+        }
+        .profile-location {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            background: linear-gradient(90deg, var(--neon-pink) 10%, var(--neon-blue) 90%);
+            color: #181828;
+            padding: 0.18em 0.9em;
+            border-radius: 1em;
+            box-shadow: 0 2px 12px var(--neon-pink), 0 0 0 2px var(--neon-blue);
+            font-size: 1.08em;
+            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
+        }
+        .flag-emoji {
+            font-size: 1.25em;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 8px var(--neon-blue));
+            margin-right: 0.2em;
+            user-select: none;
+        }
+        .dev-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+            color: #181828;
+            font-weight: 900;
+            font-size: 1.08em;
+            padding: 0.18em 1.2em;
+            border-radius: 1em;
+            margin: 0.7em auto 0 auto;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
+            text-shadow: 0 1px 8px var(--neon-blue);
+            vertical-align: middle;
+            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
-
-    <div class="container">
-        <div class="column">
-
-            <!-- 
-              By default, the Avatar is rounded. Use the following:
-              - avatar--rounded: Automatically rounds the image
-              - avatar--soft: Slightly rounds the image
-              - avatar--none: Removes any rounding
-
-              Be sure to replace the src with your own image path and update the alt text
-            -->
-            <img class="avatar avatar--rounded" src="images/avatar.jpg" srcset="images/avatar@2x.jpg 2x" alt="LittleLink">
-
-            <!-- Replace with your name or brand -->
-            <h1>
-              <div>Flockii69
-              </div>
-            </h1>
-            
-            <div>Apprentice</div>
-             <!-- Add a short description about yourself or your brand -->
-            <p>👨‍💻15, 🇦🇹 Austria</p>
-
-            <!-- All your buttons go here -->
-            <div class="button-stack" role="navigation">
-
-              <!-- GitHub -->
-              <a class="button button-github" href="https://github.com/Flockii6969" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/github.svg" alt="GitHub Logo">GitHub</a>
-              <!-- Instagram -->
-              <a class="button button-instagram" href="https://www.instagram.com/flockii69/" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/instagram.svg" alt="Instagram Logo">Instagram Main</a>
-              <!-- Instagram -->
-              <a class="button button-instagram" href="https://www.instagram.com/florian_feka7/" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/instagram.svg" alt="Instagram Logo">Instagram Privat </a>
-              <!-- Reddit -->
-              <a class="button button-reddit" href="https://www.reddit.com/u/flockii69" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/reddit.svg" alt="Reddit Logo">Reddit</a>
-              <!-- Signal -->
-              <a class="button button-signal" href="https://signal.me/#eu/WQmiyWHuaMM75YrRKZQJiAXXnzXpDKx43Bk2nPjirmRnFQvkx4pHz5LhBdOFfbKH" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/signal.svg" alt="Signal Logo">Signal</a>
-               <!-- Snapchat -->
-              <a class="button button-snapchat" href="https://www.snapchat.com/add/flockii699" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/snapchat.svg" alt="Snapchat Logo">Snapchat</a>
-              <!-- Spotify -->
-              <a class="button button-spotify" href="https://open.spotify.com/user/31y7hhmbmvikbcly2gqewcgnffwq?si=ZYYDsYDzQEu6i0sjl8H2fg" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/spotify.svg" alt="Spotify Logo">Spotify</a>
-              <!-- Steam Alt -->
-              <a class="button button-steam-alt" href="https://steamcommunity.com/profiles/76561199112959475/" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/steam.svg" alt="Steam Logo">Steam</a> 
-              <!-- Telegram -->
-              <a class="button button-telegram" href="https://www.t.me/Flockii69" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/telegram.svg" alt="Telegram Logo">Telegram</a>
-              <!-- TikTok -->
-              <a class="button button-tiktok" href="https://www.tiktok.com/@flockiii69" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/tiktok.svg" alt="TikTok Logo">TikTok</a>
-              <!-- Twitch -->
-              <a class="button button-twitch" href="https://www.twitch.tv/flockii69" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/twitch.svg" alt="Twitch Logo">Twitch</a>
-              <!-- WhatsApp -->
-              <a class="button button-whatsapp" href="https://wa.me/436605984010" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/whatsapp.svg" alt="WhatsApp Logo">WhatsApp</a>
-              <!-- X -->
-              <a class="button button-x" href="https://x.com/Flockii89" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/x.svg" alt="X Logo">Follow on X</a>
-              <!-- YouTube Alt -->
-              <a class="button button-yt-alt" href="https://youtube.com/flockii69" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/youtube-alt.svg" alt="YouTube Logo">YouTube</a>
-              <!-- Facebook -->
-              <a class="button button-faceb" href="https://www.facebook.com/florian.feka" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/facebook.svg" alt="Facebook Logo">Facebook</a>
-              <!-- Generic Blog -->
-              <a class="button button-default" href="blog.html" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/generic-blog.svg" alt="Blog Icon">Read our blog</a>
-              <!-- Generic Computer -->
-              <a class="button button-default" href="homelab.html" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/generic-computer.svg" alt="Computer Icon">Homelab Setup</a>
-              <!-- PayPal -->
-              <a class="button button-paypal" href="https://www.paypal.me/Flockii89" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/paypal.svg" alt="PayPal Logo">PayPal</a>
-             
-              <!-- Generic Email Alt -->
-              <a class="button button-default" href="mailto:florian.feka@gmx.at" target="_blank" rel="noopener" role="button"><img class="icon" aria-hidden="true" src="images/icons/generic-email-alt.svg" alt="Email Icon">Email Me </a>
-
+    <div class="topbar">
+        <div class="clock" id="clock"></div>
+        <div style="display: flex; align-items: center; gap: 1.2rem;">
+            <div class="theme-switcher" id="themeSwitcher">
+                <span class="theme-label">Theme</span>
+                <button class="mode-toggle" id="modeToggle" title="Dark/Light Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <label class="color-picker-label" title="Eigene Farbe wählen">
+                    <input type="color" id="colorPicker" class="color-picker">
+                    <span class="color-picker-emoji" id="colorPickerEmoji" style="background: linear-gradient(135deg, #fff 0%, #bbb 100%);">🎨</span>
+                </label>
             </div>
-        
-      <!-- Feel free to add your own footer information, including updating `privacy.html` to reflect how your LittleLink fork is set up -->
-      <footer>
-        <a href="privacy.html">Privacy Policy</a> 
-        <p>v.1.0 -Spotted a mistake? Let me know!</p>
-      </footer>
-    
+        </div>
     </div>
-  </div>
+    <button class="scroll-top" id="scrollTopBtn" title="Nach oben"><i class="fas fa-arrow-up"></i></button>
+    <header>
+        <h1>Flockii69</h1>
+        <p class="profile-meta">
+            <span class="profile-age" title="Alter"><i class="fas fa-birthday-cake"></i> 15 Jahre</span>
+            <span class="profile-location" title="Austria">
+                Österreich
+            </span>
+        </p>
+        <div class="dev-badge">Developer</div>
+    </header>
+    <section class="main-section">
+        <img class="avatar" src="images/avatar.jpg" srcset="images/avatar@2x.jpg 2x" alt="Flockii69 Avatar">
+        <h1>Florian Feka</h1>
+        <div class="desc">Alle Links zu mir auf einen Blick!</div>
+        <div class="search-bar">
+            <input type="text" id="linkSearch" placeholder="Link suchen..." autocomplete="off">
+            <button id="searchBtn" type="button"><i class="fas fa-search"></i></button>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        <div class="button-stack" role="navigation" id="buttonStack">
+            <a class="button" href="https://github.com/Flockii6969" target="_blank" rel="noopener"><i class="fab fa-github"></i>GitHub</a>
+            <a class="button" href="https://www.instagram.com/flockii69/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i>Instagram Main</a>
+            <a class="button" href="https://www.instagram.com/florian_feka7/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i>Instagram Privat</a>
+            <a class="button" href="https://www.reddit.com/u/flockii69" target="_blank" rel="noopener"><i class="fab fa-reddit"></i>Reddit</a>
+            <a class="button" href="https://signal.me/#eu/WQmiyWHuaMM75YrRKZQJiAXXnzXpDKx43Bk2nPjirmRnFQvkx4pHz5LhBdOFfbKH" target="_blank" rel="noopener">
+                <img src="images/icons/signal.svg" alt="Signal" style="width:1.35em;height:1.35em;vertical-align:middle;margin-right:0.5em;"> Signal
+            </a>
+            <a class="button" href="https://www.snapchat.com/add/flockii699" target="_blank" rel="noopener"><i class="fab fa-snapchat"></i>Snapchat</a>
+            <a class="button" href="https://open.spotify.com/user/31y7hhmbmvikbcly2gqewcgnffwq?si=ZYYDsYDzQEu6i0sjl8H2fg" target="_blank" rel="noopener"><i class="fab fa-spotify"></i>Spotify</a>
+            <a class="button" href="https://steamcommunity.com/profiles/76561199112959475/" target="_blank" rel="noopener"><i class="fab fa-steam"></i>Steam</a>
+            <a class="button" href="https://www.t.me/Flockii69" target="_blank" rel="noopener"><i class="fab fa-telegram"></i>Telegram</a>
+            <a class="button" href="https://www.tiktok.com/@flockiii69" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i>TikTok</a>
+            <a class="button" href="https://www.twitch.tv/flockii69" target="_blank" rel="noopener"><i class="fab fa-twitch"></i>Twitch</a>
+            <a class="button" href="https://wa.me/436605984010" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+            <a class="button" href="https://x.com/Flockii89" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i>X</a>
+            <a class="button" href="https://youtube.com/@flockii69?si=1cWwUjyYsxkBbAyw" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>YouTube</a>
+            <a class="button" href="https://www.facebook.com/florian.feka" target="_blank" rel="noopener"><i class="fab fa-facebook"></i>Facebook</a>
+            <a class="button" href="blog.html" target="_blank" rel="noopener"><i class="fas fa-blog"></i>Blog</a>
+            <a class="button" href="homelab.html" target="_blank" rel="noopener"><i class="fas fa-server"></i>Homelab Setup</a>
+            <a class="button" href="https://www.paypal.me/Flockii89" target="_blank" rel="noopener"><i class="fab fa-paypal"></i>PayPal</a>
+            <a class="button" href="mailto:florian.feka@gmx.at" target="_blank" rel="noopener"><i class="fas fa-envelope"></i>Email</a>
+        </div>
+        <div class="copy-info" id="copyInfo">Link kopiert!</div>
+        <div class="tools">
+            <button class="button" id="shareBtn" type="button"><i class="fas fa-share-alt"></i>Seite teilen</button>
+        </div>
+        <div class="thanks">Danke fürs Vorbeischauen! ✨</div>
+    </section>
+    <footer>
+        <a href="privacy.html">Privacy Policy</a>
+        <p><v 1.1 – Spotted a mistake? Let me know!</p>
+    </footer>
+    <script>
+        const searchInput = document.getElementById('linkSearch');
+        const buttonStack = document.getElementById('buttonStack');
+        const suggestionsBox = document.getElementById('suggestions');
+        const searchBtn = document.getElementById('searchBtn');
+        let suggestionActive = -1;
 
+        function searchLinks() {
+            const input = searchInput.value.toLowerCase();
+            const buttons = buttonStack.querySelectorAll('.button');
+            let suggestions = [];
+            buttons.forEach((btn, idx) => {
+                const text = btn.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    btn.classList.remove('hide');
+                    suggestions.push({text: btn.textContent, href: btn.href});
+                    btn.style.animation = `fadeInBtn 0.7s cubic-bezier(.68,-0.55,.27,1.55) ${idx * 0.04}s`;
+                } else {
+                    btn.classList.add('hide');
+                    btn.style.animation = "";
+                }
+            });
+            showSuggestions(suggestions, input);
+        }
+
+        function showSuggestions(suggestions = null, input = "") {
+            if (!searchInput.value) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+            if (suggestions === null) {
+                const buttons = buttonStack.querySelectorAll('.button');
+                suggestions = [];
+                buttons.forEach(btn => {
+                    if (!btn.classList.contains('hide')) {
+                        suggestions.push({text: btn.textContent, href: btn.href});
+                    }
+                });
+            }
+            if (!input) input = searchInput.value.toLowerCase();
+            if (suggestions.length === 0 && input.length > 0) {
+                suggestionsBox.innerHTML = '<div class="suggestion-item">Kein Link gefunden.</div>';
+                suggestionsBox.style.display = 'block';
+                suggestionsBox.style.animation = "fadeInUp 0.4s cubic-bezier(.68,-0.55,.27,1.55)";
+                return;
+            }
+            if (suggestions.length === 0) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+            suggestionsBox.innerHTML = suggestions.map((s, i) =>
+                `<div class="suggestion-item${i === 0 ? ' active' : ''}" data-href="${s.href}" tabindex="0" style="animation: fadeInUp 0.4s ${i*0.03}s cubic-bezier(.68,-0.55,.27,1.55);">${s.text}</div>`
+            ).join('');
+            suggestionsBox.style.display = 'block';
+            suggestionsBox.style.animation = "fadeInUp 0.4s cubic-bezier(.68,-0.55,.27,1.55)";
+            suggestionActive = 0;
+        }
+
+        suggestionsBox.addEventListener('mousedown', function(e) {
+            if (e.target.classList.contains('suggestion-item') && e.target.dataset.href) {
+                window.open(e.target.dataset.href, '_blank');
+            }
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            const items = suggestionsBox.querySelectorAll('.suggestion-item');
+            if (!items.length) return;
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                suggestionActive = (suggestionActive + 1) % items.length;
+                updateActiveSuggestion(items);
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                suggestionActive = (suggestionActive - 1 + items.length) % items.length;
+                updateActiveSuggestion(items);
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (items[suggestionActive] && items[suggestionActive].dataset.href) {
+                    window.open(items[suggestionActive].dataset.href, '_blank');
+                }
+            }
+        });
+
+        function updateActiveSuggestion(items) {
+            items.forEach((item, idx) => {
+                if (idx === suggestionActive) {
+                    item.classList.add('active');
+                    item.scrollIntoView({block: "nearest"});
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        searchBtn.addEventListener('click', searchLinks);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === "Enter") searchLinks();
+        });
+
+        searchInput.addEventListener('input', searchLinks);
+
+        document.addEventListener('click', function(e) {
+            if (!suggestionsBox.contains(e.target) && e.target !== searchInput) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.button-stack .button').forEach(btn => {
+            btn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                const url = btn.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    const info = document.getElementById('copyInfo');
+                    info.style.display = 'block';
+                    setTimeout(() => { info.style.display = 'none'; }, 1200);
+                });
+            });
+        });
+
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const modeToggle = document.getElementById('modeToggle');
+        const colorPicker = document.getElementById('colorPicker');
+        const colorPickerEmoji = document.getElementById('colorPickerEmoji');
+        let darkMode = true;
+
+        themeSwitcher.addEventListener('click', function(e) {
+        
+            if (!e.target.closest('.mode-toggle')) {
+                themeSwitcher.classList.toggle('open');
+            }
+        });
+        document.addEventListener('click', function(e) {
+            if (!themeSwitcher.contains(e.target)) {
+                themeSwitcher.classList.remove('open');
+            }
+        });
+
+        modeToggle.addEventListener('click', function(e) {
+            darkMode = !darkMode;
+            if (darkMode) {
+                document.body.style.background = "radial-gradient(ellipse at 10% 0%, var(--neon-blue) 0%, transparent 70%), radial-gradient(ellipse at 90% 100%, var(--neon-pink) 0%, transparent 70%), linear-gradient(120deg, var(--dark-bg) 0%, #23233a 100%)";
+                modeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                modeToggle.setAttribute('aria-label', 'Dark Mode');
+            } else {
+                document.body.style.background = "radial-gradient(ellipse at 10% 0%, #fff 0%, transparent 70%), radial-gradient(ellipse at 90% 100%, #ffe0f7 0%, transparent 70%), linear-gradient(120deg, #fff 0%, #e0e0e0 100%)";
+                modeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                modeToggle.setAttribute('aria-label', 'Light Mode');
+            }
+            modeToggle.querySelector('i').style.transform = 'scale(1.3) rotate(-20deg)';
+            setTimeout(() => {
+                modeToggle.querySelector('i').style.transform = '';
+            }, 350);
+            e.stopPropagation();
+        });
+
+        colorPicker.addEventListener('input', function(e) {
+            const color = colorPicker.value;
+            document.body.style.background = `radial-gradient(ellipse at 10% 0%, ${color} 0%, transparent 70%), radial-gradient(ellipse at 90% 100%, var(--neon-pink) 0%, transparent 70%), linear-gradient(120deg, var(--dark-bg) 0%, #23233a 100%)`;
+            colorPickerEmoji.style.background = color;
+            e.stopPropagation();
+        });
+        colorPicker.addEventListener('change', function() {
+            colorPickerEmoji.style.background = colorPicker.value;
+        });
+
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        const shareBtn = document.getElementById('shareBtn');
+        if (navigator.share) {
+            shareBtn.addEventListener('click', () => {
+                navigator.share({
+                    title: document.title,
+                    text: 'Check meine Links!',
+                    url: window.location.href
+                });
+            });
+        } else {
+            shareBtn.style.display = 'none';
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `🕒 ${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        searchLinks();
+    </script>
 </body>
-
 </html>
