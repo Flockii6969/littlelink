@@ -62,12 +62,13 @@
             margin-right: 1.5rem;
             user-select: none;
             min-width: 120px;
-            text-align: left;
+            text-align: center;
             animation: fadeInLeft 1.8s cubic-bezier(.77,0,.18,1.01);
-        }
-        @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-80px);}
-            to { opacity: 1; transform: translateX(0);}
+            padding: 0.5em 1em;
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.2), rgba(255, 0, 127, 0.2));
+            box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
         }
         .color-dropdown-btn, .dark-toggle {
             box-shadow: 0 2px 12px var(--neon-blue);
@@ -187,16 +188,10 @@
             font-weight: 700;
             box-shadow: 0 2px 20px var(--neon-blue), 0 2px 10px var(--neon-pink);
             text-decoration: none;
-            transition: 
-                transform 0.5s cubic-bezier(.77,0,.18,1.01),
-                box-shadow 0.5s,
-                background 0.5s,
-                color 0.5s;
+            transition: transform 0.5s cubic-bezier(.77,0,.18,1.01), box-shadow 0.5s, background 0.5s, color 0.5s;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            opacity: 1;
-            animation: fadeInBtn 1.4s cubic-bezier(.77,0,.18,1.01);
         }
         .button::before {
             content: "";
@@ -230,17 +225,9 @@
             transition: opacity 0.4s, transform 0.4s;
         }
         .button:hover, .button:focus {
-            transform: translateY(-12px) scale(1.11) rotate(-2deg);
-            box-shadow: 0 16px 64px var(--neon-pink), 0 4px 32px var(--neon-blue);
-            background: linear-gradient(90deg, var(--neon-pink) 10%, var(--neon-blue) 90%);
-            color: var(--neon-blue);
-            outline: none;
-            animation: pulse 0.8s;
-        }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 var(--neon-pink);}
-            70% { box-shadow: 0 0 32px 16px var(--neon-pink);}
-            100% { box-shadow: 0 16px 64px var(--neon-pink), 0 4px 32px var(--neon-blue);}
+            box-shadow: 0 0 32px 8px var(--neon-pink), 0 0 32px 8px var(--neon-blue);
+            filter: brightness(1.08) saturate(1.2);
+            transform: scale(1.04) rotate(-2deg);
         }
         .search-bar {
             margin: 2rem 0 2.5rem 0;
@@ -259,17 +246,6 @@
             margin-left: auto;
             margin-right: auto;
             border: 3px solid var(--neon-blue);
-            animation: searchBarGlow 4s infinite alternate cubic-bezier(.77,0,.18,1.01);
-        }
-        @keyframes searchBarGlow {
-            0% {
-                box-shadow: 0 0 48px 16px var(--neon-blue), 0 0 96px 32px var(--neon-pink);
-                border-color: var(--neon-blue);
-            }
-            100% {
-                box-shadow: 0 0 96px 32px var(--neon-pink), 0 0 64px 24px var(--neon-blue);
-                border-color: var(--neon-pink);
-            }
         }
         .search-bar input {
             padding: 1.2rem 2rem;
@@ -487,255 +463,698 @@
                 color: #181828 !important;
             }
         }
-        .theme-switcher {
-            display: flex;
+        .color-picker-label {
+            display: inline-flex;
             align-items: center;
-            gap: 0.7rem;
-            background: var(--glass-bg);
-            border: 2.5px solid var(--neon-pink);
-            border-radius: 28px;
-            padding: 0.5rem 1.3rem;
-            box-shadow: 0 2px 16px var(--neon-blue);
             cursor: pointer;
-            transition: box-shadow 0.4s, border 0.4s, background 0.4s;
+            margin-left: 0.7em;
             position: relative;
-            user-select: none;
         }
-        .theme-switcher:hover {
-            box-shadow: 0 4px 32px var(--neon-pink), 0 2px 12px var(--neon-blue);
-            border-color: var(--neon-blue);
-            background: var(--glass-bg-strong);
-        }
-        .theme-switcher .theme-icon {
-            font-size: 1.3rem;
-            color: var(--neon-blue);
-            transition: color 0.3s;
-        }
-        .theme-switcher .theme-label {
-            font-weight: 700;
-            color: var(--text-light);
-            font-size: 1.07rem;
-            letter-spacing: 1px;
-            margin-right: 0.5rem;
-        }
-        .theme-switcher .color-picker-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0.7rem;
-            margin-top: 0.1rem;
-            position: relative;
-            cursor: pointer;
-        }
-        .theme-switcher .color-picker {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .color-picker {
+            width: 32px;
+            height: 32px;
             border: none;
-            cursor: pointer;
-            background: none;
             padding: 0;
-            appearance: none;
-            outline: none;
+            margin-right: -28px;
+            opacity: 0;
+            cursor: pointer;
             position: absolute;
             left: 0;
             top: 0;
-            opacity: 0;
-            z-index: 2;
         }
-        .theme-switcher .color-picker-emoji {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
+        .color-picker-emoji {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.45rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            font-size: 1.3em;
             background: linear-gradient(135deg, #fff 0%, #bbb 100%);
-            border: 3px solid var(--neon-blue);
-            box-shadow: 0 0 0 3px var(--neon-pink), 0 2px 16px var(--neon-blue), 0 0 16px 2px var(--neon-pink);
-            pointer-events: none;
-            transition: border 0.3s, box-shadow 0.4s, background 0.3s, transform 0.3s;
-            z-index: 1;
-            user-select: none;
-        }
-        .theme-switcher .color-picker:focus + .color-picker-emoji,
-        .theme-switcher .color-picker:hover + .color-picker-emoji {
-            border: 3px solid var(--neon-pink);
-            box-shadow: 0 0 0 5px var(--neon-blue), 0 0 32px 8px var(--neon-pink);
-            transform: scale(1.13) rotate(-6deg);
-            background: linear-gradient(135deg, #fff 0%, #eee 100%);
-        }
-        .theme-switcher .mode-toggle {
-            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-pink) 100%);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0.5rem;
-            font-size: 1.35rem;
-            color: #181828;
-            box-shadow: 0 2px 16px var(--neon-blue), 0 0 0 3px var(--neon-pink);
+            transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+            margin-left: 0.2em;
+            box-shadow: 0 2px 12px var(--neon-blue);
             cursor: pointer;
-            transition: 
-                background 0.4s, 
-                color 0.4s, 
-                box-shadow 0.4s, 
-                transform 0.3s cubic-bezier(.77,0,.18,1.01);
-            outline: none;
             position: relative;
-            z-index: 2;
         }
-        .theme-switcher .mode-toggle:hover, 
-        .theme-switcher .mode-toggle:focus {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-blue) 100%);
-            color: var(--neon-yellow);
-            box-shadow: 0 0 0 6px var(--neon-blue), 0 0 32px 8px var(--neon-pink);
-            transform: scale(1.13) rotate(-8deg);
+        .color-picker-emoji:hover {
+            border-color: var(--neon-pink);
+            box-shadow: 0 4px 24px var(--neon-pink);
         }
-        .theme-switcher .mode-toggle .fa-moon,
-        .theme-switcher .mode-toggle .fa-sun {
-            transition: transform 0.5s cubic-bezier(.77,0,.18,1.01), color 0.4s;
-        }
-        .theme-switcher .mode-toggle .fa-sun {
-            color: var(--neon-yellow);
-            text-shadow: 0 0 8px var(--neon-yellow), 0 0 16px var(--neon-pink);
-        }
-        .theme-switcher .mode-toggle .fa-moon {
-            color: var(--neon-blue);
-            text-shadow: 0 0 8px var(--neon-blue), 0 0 16px var(--neon-pink);
-        }
-        .dev-badge {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
-            color: #181828;
-            font-weight: 900;
-            font-size: 1em;
-            padding: 0.18em 0.7em;
-            border-radius: 1em;
-            margin-left: 0.6em;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
-            text-shadow: 0 1px 8px var(--neon-blue);
-            vertical-align: middle;
-            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
-        }
-        @keyframes badgePop {
-            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
-            60% { transform: scale(1.15) rotate(4deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-        @keyframes avatarBorderGlow {
-            0% { box-shadow: 0 0 0 8px rgba(0,247,255,0.18), 0 0 32px 8px var(--neon-blue), 0 0 64px 16px var(--neon-pink);}
-            100% { box-shadow: 0 0 0 16px rgba(255,0,127,0.13), 0 0 48px 16px var(--neon-pink), 0 0 96px 32px var(--neon-blue);}
-        }
-        @keyframes floatSection {
-            0% { transform: translateY(0);}
-            50% { transform: translateY(-12px);}
-            100% { transform: translateY(0);}
-        }
-        .profile-meta {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.2em;
-            font-size: 1.18rem;
-            font-weight: 700;
-            margin-bottom: 0.5em;
-            margin-top: 0.5em;
-            color: var(--neon-blue);
-            text-shadow: 0 2px 12px var(--neon-pink);
-            letter-spacing: 1.1px;
-            flex-wrap: wrap;
-        }
-        .profile-age {
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
-            color: #181828;
-            padding: 0.18em 0.9em;
-            border-radius: 1em;
-            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
-            font-size: 1.08em;
-            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
-        }
-        .profile-age i {
-            color: var(--neon-yellow);
-            margin-right: 0.3em;
-            font-size: 1.1em;
-        }
-        .profile-location {
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-            background: linear-gradient(90deg, var(--neon-pink) 10%, var(--neon-blue) 90%);
-            color: #181828;
-            padding: 0.18em 0.9em;
-            border-radius: 1em;
-            box-shadow: 0 2px 12px var(--neon-pink), 0 0 0 2px var(--neon-blue);
-            font-size: 1.08em;
-            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
-        }
-        .flag-emoji {
-            font-size: 1.25em;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 8px var(--neon-blue));
-            margin-right: 0.2em;
-            user-select: none;
-        }
-        .dev-badge {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
-            color: #181828;
-            font-weight: 900;
-            font-size: 1.08em;
-            padding: 0.18em 1.2em;
-            border-radius: 1em;
-            margin: 0.7em auto 0 auto;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 12px var(--neon-blue), 0 0 0 2px var(--neon-pink);
-            text-shadow: 0 1px 8px var(--neon-blue);
-            vertical-align: middle;
-            animation: badgePop 1.2s cubic-bezier(.77,0,.18,1.01);
-            text-align: center;
-        }
-    </style>
-</head>
+        /* Ergänze im <style>-Block für ein schönes Design von Darkmode-Switch & Farbauswahl: */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+    border-radius: 2em;
+    padding: 0.3em 1.2em;
+    box-shadow: 0 2px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    border: 2.5px solid var(--neon-blue);
+}
+.mode-toggle {
+    background: #23233a;
+    color: var(--neon-blue);
+    border: 2px solid var(--neon-pink);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 1.25em;
+    margin: 0 0.3em;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mode-toggle:hover {
+    background: var(--neon-pink);
+    color: #fff;
+    border-color: var(--neon-blue);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.color-picker-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 0.7em;
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 2px 12px var(--neon-blue);
+    background: #23233a;
+    padding: 0.1em;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+.color-picker-label:hover {
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    margin-right: -28px;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-blue);
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+    margin-left: 0.2em;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    cursor: pointer;
+    position: relative;
+}
+.color-picker-emoji:hover {
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+        /* Füge das in deinen <style>-Block ein, um die Farbauswahl rechts oben korrekt und schön darzustellen: */
+.color-picker-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 0.7em;
+    position: relative;
+}
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    margin-right: -28px;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-blue);
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+    margin-left: 0.2em;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    cursor: pointer;
+    position: relative;
+}
+.color-picker-emoji:hover {
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.clock-bubble, .color-picker-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    animation: pulse 2s infinite;
+    border: 2px solid var(--neon-blue);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.clock-bubble:hover, .color-picker-label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--neon-pink), 0 4px 12px var(--neon-blue);
+}
+
+#clock {
+    font-family: 'Montserrat', monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.color-picker {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-size: 1.5em;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.color-picker-emoji:hover {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px var(--neon-pink), 0 4px 12px var(--neon-blue);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    }
+}
+.clock-bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 50px;
+    border-radius: 25px; /* Abgerundete Ecken */
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    animation: pulse 2s infinite;
+    border: 2px solid var(--neon-blue);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.clock-bubble:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--neon-pink), 0 4px 12px var(--neon-blue);
+}
+
+#clock {
+    font-family: 'Montserrat', monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+.side-clock {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    z-index: 100;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-family: 'Montserrat', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+#clock {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+#date {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Uhr, Tag und Datum auf der linken Seite */
+.side-clock {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    z-index: 100;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff;
+    font-family: 'Montserrat', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+#clock {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+#date {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+/* Rechteckige Farbauswahl */
+.color-picker-container {
+    position: fixed;
+    top: 70%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    z-index: 100;
+}
+
+.color-picker-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+    background: #23233a;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    padding: 0.5rem 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    margin-right: 0.5rem;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+}
+
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.color-picker-label:hover {
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+
+/* Uhr und Datum links oben */
+.top-left {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var (--neon-blue), 0 2px 8px var(--neon-pink);
+    z-index: 100;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.top-left.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff;
+    font-family: 'Montserrat', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+#clock {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+#date {
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    text-align: left;
+}
+
+/* Farbauswahl rechts oben */
+.color-picker-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    z-index: 100;
+}
+
+.color-picker-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+    background: #23233a;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    padding: 0.5rem 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    margin-right: 0.5rem;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+}
+
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.color-picker-label:hover {
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.clock-date-rect {
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+    border-radius: 18px;
+    background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+    box-shadow: 0 2px 24px var(--neon-blue), 0 0 0 4px var(--neon-pink);
+    padding: 0.7em 2.2em;
+    font-size: 1.18em;
+    font-weight: 800;
+    color: #181828;
+    letter-spacing: 1.5px;
+    min-width: 270px;
+    margin-bottom: 0.5em;
+}
+#clock {
+    font-family: 'Montserrat', monospace;
+    font-size: 1.25em;
+    min-width: 90px;
+    text-align: center;
+}
+#date {
+    color: var(--neon-blue);
+    font-size: 1em;
+    font-weight: 700;
+    margin-left: 0.7em;
+    letter-spacing: 1px;
+}
+
+/* Rechteckige, schöne Farbauswahl oben rechts */
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+    padding: 0.4em 1.2em;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    margin-left: 1.2em;
+}
+.color-picker-label-rect {
+    display: flex;
+    align-items: center;
+    background: #23233a;
+    border-radius: 10px;
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 2px 12px var(--neon-blue);
+    padding: 0.3em 1em;
+    cursor: pointer;
+    transition: border 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+.color-picker-label-rect:hover {
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    margin-left: 0.2em;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    position: relative;
+}
+.color-picker-emoji:hover {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.theme-color-switcher {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%);
+    border-radius: 14px;
+    padding: 0.4em 1.2em;
+    box-shadow: 0 2px 16px var(--neon-blue), 0 2px 8px var(--neon-pink);
+    border: 2px solid var(--neon-blue);
+}
+.mode-toggle {
+    background: #23233a;
+    color: var(--neon-blue);
+    border: 2px solid var(--neon-pink);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.25em;
+    margin: 0 0.3em 0 0;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mode-toggle:hover {
+    background: var(--neon-pink);
+    color: #fff;
+    border-color: var(--neon-blue);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.color-picker-label-rect {
+    display: flex;
+    align-items: center;
+    background: #23233a;
+    border-radius: 10px;
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 2px 12px var(--neon-blue);
+    padding: 0.3em 1em;
+    cursor: pointer;
+    transition: border 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+.color-picker-label-rect:hover {
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.color-picker-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    transition: background 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    margin-left: 0.2em;
+    box-shadow: 0 2px 12px var(--neon-blue);
+    position: relative;
+}
+.color-picker-emoji:hover {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+    box-shadow: 0 4px 24px var(--neon-pink);
+}
+            </style>
+        </head>
 <body>
     <div class="topbar">
-        <div class="clock" id="clock"></div>
-        <div style="display: flex; align-items: center; gap: 1.2rem;">
-            <div class="theme-switcher" id="themeSwitcher">
-                <span class="theme-label">Theme</span>
-                <button class="mode-toggle" id="modeToggle" title="Dark/Light Mode">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <label class="color-picker-label" title="Eigene Farbe wählen">
-                    <input type="color" id="colorPicker" class="color-picker">
-                    <span class="color-picker-emoji" id="colorPickerEmoji" style="background: linear-gradient(135deg, #fff 0%, #bbb 100%);">🎨</span>
-                </label>
-            </div>
-        </div>
+    <div class="clock-date-rect">
+        <span id="clock"></span>
+        <span id="date"></span>
     </div>
+    <div class="theme-color-switcher" id="themeSwitcher">
+        <button class="mode-toggle" id="modeToggle" title="Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <label class="color-picker-label-rect" title="Eigene Farbe wählen">
+            <input type="color" id="colorPicker" class="color-picker">
+            <span class="color-picker-emoji" id="colorPickerEmoji">🎨</span>
+        </label>
+    </div>
+</div>
     <button class="scroll-top" id="scrollTopBtn" title="Nach oben"><i class="fas fa-arrow-up"></i></button>
     <header>
-        <h1>Flockii69</h1>
-        <p class="profile-meta">
-            <span class="profile-age" title="Alter"><i class="fas fa-birthday-cake"></i> 15 Jahre</span>
-            <span class="profile-location" title="Austria">
-                Österreich
-            </span>
-        </p>
-        <div class="dev-badge">Developer</div>
-    </header>
+    <h1>Flockii69</h1>
+    <div class="hero-greeting" id="heroGreeting"></div>
+    <p class="profile-meta">
+    <span class="dev-badge" id="profile-age" title="Alter"><i class="fas fa-birthday-cake"></i> 15 Jahre</span>
+    <span class="dev-badge" id="profile-location" title="Standort">Österreich</span>
+    <span class="dev-badge" id="profile-role">Entwickler</span>
+</p>
+</header>
     <section class="main-section">
         <img class="avatar" src="images/avatar.jpg" srcset="images/avatar@2x.jpg 2x" alt="Flockii69 Avatar">
+        <div class="scroll-hint"><i class="fas fa-angle-double-down"></i></div>
         <h1>Florian Feka</h1>
         <div class="desc">Alle Links zu mir auf einen Blick!</div>
+        <div class="about" id="aboutSection">
+            <strong id="aboutLabel">Über mich:</strong>
+            <p id="aboutText">
+                Hi, ich bin Florian Feka (Flockii69), leidenschaftlicher Entwickler und Technikfan aus Österreich. Hier findest du alle meine Socials, Projekte und Kontaktmöglichkeiten. Viel Spaß beim Stöbern!
+            </p>
+        </div>
         <div class="search-bar">
             <input type="text" id="linkSearch" placeholder="Link suchen..." autocomplete="off">
             <button id="searchBtn" type="button"><i class="fas fa-search"></i></button>
@@ -769,11 +1188,60 @@
             <button class="button" id="shareBtn" type="button"><i class="fas fa-share-alt"></i>Seite teilen</button>
         </div>
         <div class="thanks">Danke fürs Vorbeischauen! ✨</div>
+        <div style="margin-top: 2em; text-align: center;">
+    <select id="langSelect" style="padding:0.4em 1em; border-radius:1em; border:2px solid var(--neon-blue); font-weight:700; color:var(--neon-blue); background:var(--glass-bg);">
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="tr">🇹🇷 Türkçe</option>
+        <option value="nl">🇳🇱 Nederlands</option>
+        <option value="pl">🇵🇱 Polski</option>
+        <option value="uk">🇺🇦 Українська</option>
+        <option value="sv">🇸🇪 Svenska</option>
+        <option value="ro">🇷🇴 Română</option>
+        <option value="el">🇬🇷 Ελληνικά</option>
+        <option value="hu">🇭🇺 Magyar</option>
+        <option value="cs">🇨🇿 Čeština</option>
+        <option value="da">🇩🇰 Dansk</option>
+        <option value="fi">🇫🇮 Suomi</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="th">🇹🇭 ไทย</option>
+        <option value="vi">🇻🇳 Tiếng Việt</option>
+        <option value="sq">🇦🇱 Shqip</option>
+    </select>
+</div>
     </section>
     <footer>
-        <a href="privacy.html">Privacy Policy</a>
-        <p><v 1.1 – Spotted a mistake? Let me know!</p>
-    </footer>
+    <a href="privacy.html">Datenschutz</a>
+    <div style="margin-top: 1.5em; font-size: 1.1rem; color: var(--neon-pink); display: flex; align-items: center; justify-content: center; gap: 0.5em;">
+    <span id="footer-madewith" style="font-size: 1.2em;">Made with</span>
+    <span style="font-size: 1.5em; animation: heartBeat 1.5s infinite;">❤️</span>
+    <span id="footer-inaustria" style="font-size: 1.2em;">in Österreich</span>
+</div>
+    <div class="footer-social" style="margin:1em 0;">
+        <a href="https://github.com/Flockii6969" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/flockii69/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:florian.feka@gmx.at"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div id="footer-date" style="margin-top: 1em; font-size: 0.95rem; color: var(--neon-blue); opacity: 0.8;"></div>
+    <div class="footer-version" style="margin-top:1em; font-size:1.05em; color:var(--neon-blue); font-weight:700;">
+        Version <span id="version-number">1.1</span> &ndash; Letzte Aktualisierung: <span id="footer-date-version"></span>
+    </div>
+</footer>
+    <div id="cookieNotice" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%); color: #181828; padding: 1.2rem 2rem; z-index: 9999; box-shadow: 0 -2px 24px var(--neon-blue); text-align: center; font-size: 1.08rem; border-top: 3px solid var(--neon-blue); border-radius: 18px 18px 0 0; margin: 0 auto; max-width: 540px;">
+    <span id="cookieText" style="font-weight:600;">
+        🍪 Diese Website verwendet <b>keine Cookies</b>, aber externe Dienste (z.B. YouTube, Instagram) könnten Daten erfassen.
+    </span>
+    <button id="cookieOkBtn" style="margin-left: 1.2em; background: linear-gradient(90deg, var(--neon-blue) 10%, var(--neon-pink) 90%); color: #181828; border: none; border-radius: 8px; padding: 0.6em 1.5em; font-weight: 900; font-size: 1.08em; cursor: pointer; box-shadow: 0 2px 12px var(--neon-blue); transition: background 0.3s, color 0.3s;">
+        OK
+    </button>
+    <a href="privacy.html" style="margin-left: 1.2em; color: var(--neon-pink); text-decoration: underline; font-weight: 700;">Mehr erfahren</a>
+</div>
     <script>
         const searchInput = document.getElementById('linkSearch');
         const buttonStack = document.getElementById('buttonStack');
@@ -940,16 +1408,18 @@
         });
 
         const scrollTopBtn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                scrollTopBtn.classList.add('show');
-            } else {
-                scrollTopBtn.classList.remove('show');
-            }
-        });
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        });
+        if (scrollTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 200) {
+                    scrollTopBtn.classList.add('show');
+                } else {
+                    scrollTopBtn.classList.remove('show');
+                }
+            });
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
         const shareBtn = document.getElementById('shareBtn');
         if (navigator.share) {
@@ -964,17 +1434,682 @@
             shareBtn.style.display = 'none';
         }
 
-        function updateClock() {
+        function updateClockAndDateTop() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `🕒 ${h}:${m}:${s}`;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+        };
 
-        searchLinks();
+        const translations = {
+    de: {
+        aboutLabel: "Über mich:",
+        aboutText: "Hi, ich bin Florian Feka (Flockii69), leidenschaftlicher Entwickler und Technikfan aus Österreich. Hier findest du alle meine Socials, Projekte und Kontaktmöglichkeiten. Viel Spaß beim Stöbern!",
+        desc: "Alle Links zu mir auf einen Blick!",
+        madeWith: "Gemacht mit",
+        inAustria: "in Österreich",
+        searchPlaceholder: "Link suchen...",
+        welcome: "Willkommen auf meiner Seite! 👋",
+        greeting1: "Schön, dass du da bist! 🚀",
+        greeting2: "Entdecke meine Projekte und Links! 💡",
+        greeting3: "Let's connect! 🌐",
+        thanks: "Danke fürs Vorbeischauen! ✨",
+        lastUpdate: "Letzte Aktualisierung:",
+        age: "15 Jahre",
+        location: "Österreich",
+        role: "Entwickler",
+        privacy: "Datenschutz",
+    },
+    en: {
+        aboutLabel: "About me:",
+        aboutText: "Hi, I am Florian Feka (Flockii69), passionate developer and tech enthusiast from Austria. Here you find all my socials, projects and contact options. Have fun browsing!",
+        desc: "All my links at a glance!",
+        madeWith: "Made with",
+        inAustria: "in Austria",
+        searchPlaceholder: "Search link...",
+        welcome: "Welcome to my page! 👋",
+        greeting1: "Glad you're here! 🚀",
+        greeting2: "Discover my projects and links! 💡",
+        greeting3: "Let's connect! 🌐",
+        thanks: "Thanks for stopping by! ✨",
+        lastUpdate: "Last update:",
+        age: "15 years",
+        location: "Austria",
+        role: "Developer",
+        privacy: "Privacy Policy",
+    },
+    es: {
+        aboutLabel: "Sobre mí:",
+        aboutText: "Hola, soy Florian Feka (Flockii69), desarrollador apasionado y entusiasta de la tecnología de Austria. Aquí encuentras todas mis redes, proyectos y formas de contacto. ¡Disfruta explorando!",
+        desc: "¡Todos mis enlaces de un vistazo!",
+        madeWith: "Hecho con",
+        inAustria: "en Austria",
+        searchPlaceholder: "Buscar enlace...",
+        welcome: "¡Bienvenido a mi página! 👋",
+        greeting1: "¡Me alegra que estés aquí! 🚀",
+        greeting2: "¡Descubre mis proyectos y enlaces! 💡",
+        greeting3: "¡Conectemos! 🌐",
+        thanks: "¡Gracias por tu visita! ✨",
+        lastUpdate: "Última actualización:",
+        age: "15 años",
+        location: "Austria",
+        role: "Desarrollador",
+        privacy: "Privacidad",
+    },
+    fr: {
+        aboutLabel: "À propos de moi :",
+        aboutText: "Salut, je suis Florian Feka (Flockii69), développeur passionné et fan de technologie d'Autriche. Retrouvez ici tous mes réseaux, projets et moyens de contact. Bonne visite !",
+        desc: "Tous mes liens en un coup d'œil !",
+        madeWith: "Fait avec",
+        inAustria: "en Autriche",
+        searchPlaceholder: "Rechercher un lien...",
+        welcome: "Bienvenue sur ma page ! 👋",
+        greeting1: "Ravi de vous voir ici ! 🚀",
+        greeting2: "Découvrez mes projets et liens ! 💡",
+        greeting3: "Connectons-nous ! 🌐",
+        thanks: "Merci de votre visite ! ✨",
+        lastUpdate: "Dernière mise à jour :",
+        age: "15 ans",
+        location: "Autriche",
+        role: "Développeur",
+        privacy: "Confidentialité",
+    },
+    it: {
+        aboutLabel: "Chi sono:",
+        aboutText: "Ciao, sono Florian Feka (Flockii69), sviluppatore appassionato e amante della tecnologia dall'Austria. Qui trovi tutti i miei social, progetti e contatti. Buona navigazione!",
+        desc: "Tutti i miei link a colpo d'occhio!",
+        madeWith: "Fatto con",
+        inAustria: "in Austria",
+        searchPlaceholder: "Cerca link...",
+        welcome: "Benvenuto sulla mia pagina! 👋",
+        greeting1: "Felice che tu sia qui! 🚀",
+        greeting2: "Scopri i miei progetti e link! 💡",
+        greeting3: "Connettiamoci! 🌐",
+        thanks: "Grazie per la visita! ✨",
+        lastUpdate: "Ultimo aggiornamento:",
+        age: "15 anni",
+        location: "Austria",
+        role: "Sviluppatore",
+        privacy: "Privacy",
+    },
+    ru: {
+        aboutLabel: "Обо мне:",
+        aboutText: "Привет, я Флориан Фека (Flockii69), увлечённый разработчик и фанат технологий из Австрии. Здесь вы найдёте все мои соцсети, проекты и контакты. Приятного просмотра!",
+        desc: "Все мои ссылки в одном месте!",
+        madeWith: "Сделано с",
+        inAustria: "в Австрии",
+        searchPlaceholder: "Поиск ссылки...",
+        welcome: "Добро пожаловать на мой сайт! 👋",
+        greeting1: "Рад вас видеть! 🚀",
+        greeting2: "Откройте мои проекты и ссылки! 💡",
+        greeting3: "Давайте свяжемся! 🌐",
+        thanks: "Спасибо за визит! ✨",
+        lastUpdate: "Последнее обновление:",
+        age: "15 лет",
+        location: "Австрия",
+        role: "Разработчик",
+        privacy: "Конфиденциальность",
+    },
+    zh: {
+        aboutLabel: "关于我：",
+        aboutText: "你好，我是Florian Feka (Flockii69)，来自奥地利的热情开发者和技术爱好者。这里有我的所有社交、项目和联系方式。祝你浏览愉快！",
+        desc: "我的所有链接一览！",
+        madeWith: "由",
+        inAustria: "在奥地利制作",
+        searchPlaceholder: "搜索链接...",
+        welcome: "欢迎来到我的页面！👋",
+        greeting1: "很高兴你来到这里！🚀",
+        greeting2: "发现我的项目和链接！💡",
+        greeting3: "让我们联系吧！🌐",
+        thanks: "感谢您的访问！✨",
+        lastUpdate: "最后更新：",
+        age: "15岁",
+        location: "奥地利",
+        role: "开发者",
+        privacy: "隐私政策",
+    },
+    ar: {
+        aboutLabel: "عنّي:",
+        aboutText: "مرحبًا، أنا فلوريان فيكا (Flockii69)، مطور شغوف ومحب للتقنية من النمسا. هنا ستجد جميع حساباتي ومشاريعي وطرق التواصل. تصفح ممتع!",
+        desc: "جميع روابطى في لمحة واحدة!",
+        madeWith: "صنع بحب",
+        inAustria: "في النمسا",
+        searchPlaceholder: "ابحث عن رابط...",
+        welcome: "مرحبًا بك في صفحتي! 👋",
+        greeting1: "سعيد بوجودك هنا! 🚀",
+        greeting2: "اكتشف مشاريعي وروابطي! 💡",
+        greeting3: "لنتواصل! 🌐",
+        thanks: "شكرًا لزيارتك! ✨",
+        lastUpdate: "آخر تحديث:",
+        age: "١٥ سنة",
+        location: "النمسا",
+        role: "مطور",
+        privacy: "سياسة الخصوصية",
+    },
+    pt: {
+        aboutLabel: "Sobre mim:",
+        aboutText: "Olá, sou Florian Feka (Flockii69), desenvolvedor apaixonado e fã de tecnologia da Áustria. Aqui você encontra todas as minhas redes, projetos e contatos. Boa navegação!",
+        desc: "Todos os meus links num só lugar!",
+        madeWith: "Feito com",
+        inAustria: "na Áustria",
+        searchPlaceholder: "Pesquisar link...",
+        welcome: "Bem-vindo à minha página! 👋",
+        greeting1: "Que bom que você está aqui! 🚀",
+        greeting2: "Descubra meus projetos e links! 💡",
+        greeting3: "Vamos nos conectar! 🌐",
+        thanks: "Obrigado pela visita! ✨",
+        lastUpdate: "Última atualização:",
+        age: "15 anos",
+        location: "Áustria",
+        role: "Desenvolvedor",
+        privacy: "Privacidade",
+    },
+    hi: {
+        aboutLabel: "मेरे बारे में:",
+        aboutText: "नमस्ते, मैं Florian Feka (Flockii69) हूँ, ऑस्ट्रिया का एक उत्साही डेवलपर और टेक्नोलॉजी प्रेमी। यहाँ आपको मेरे सभी सोशल्स, प्रोजेक्ट्स और संपर्क मिलेंगे। ब्राउज़िंग का आनंद लें!",
+        desc: "मेरे सभी लिंक एक जगह!",
+        madeWith: "प्रेम से बनाया",
+        inAustria: "ऑस्ट्रिया में",
+        searchPlaceholder: "लिंक खोजें...",
+        welcome: "मेरे पेज पर स्वागत है! 👋",
+        greeting1: "खुशी है कि आप यहाँ हैं! 🚀",
+        greeting2: "मेरे प्रोजेक्ट्स और लिंक देखें! 💡",
+        greeting3: "चलो जुड़ते हैं! 🌐",
+        thanks: "आने के लिए धन्यवाद! ✨",
+        lastUpdate: "अंतिम अपडेट:",
+        age: "15 वर्ष",
+        location: "ऑस्ट्रिया",
+        role: "डेवलपर",
+        privacy: "गोपनीयता",
+    },
+    ja: {
+        aboutLabel: "自己紹介：",
+        aboutText: "こんにちは、私はFlorian Feka（Flockii69）です。オーストリア出身の情熱的な開発者で技術愛好家です。ここでは私のSNS、プロジェクト、連絡先がすべて見つかります。ごゆっくりご覧ください！",
+        desc: "私の全リンクを一目で！",
+        madeWith: "愛を込めて作成",
+        inAustria: "オーストリアで",
+        searchPlaceholder: "リンクを検索...",
+        welcome: "私のページへようこそ！👋",
+        greeting1: "来てくれて嬉しいです！🚀",
+        greeting2: "私のプロジェクトとリンクを見てね！💡",
+        greeting3: "つながりましょう！🌐",
+        thanks: "ご訪問ありがとうございます！✨",
+        lastUpdate: "最終更新：",
+        age: "15歳",
+        location: "オーストリア",
+        role: "開発者",
+        privacy: "プライバシー",
+    },
+    tr: {
+        aboutLabel: "Hakkımda:",
+        aboutText: "Merhaba, ben Florian Feka (Flockii69), Avusturya'dan tutkulu bir geliştirici ve teknoloji meraklısıyım. Burada tüm sosyal medya hesaplarımı, projelerimi ve iletişim bilgilerimi bulabilirsin. Keyifli gezintiler!",
+        desc: "Tüm bağlantılarım bir arada!",
+        madeWith: "Sevgiyle yapıldı",
+        inAustria: "Avusturya'da",
+        searchPlaceholder: "Bağlantı ara...",
+        welcome: "Sayfama hoş geldin! 👋",
+        greeting1: "Burada olduğuna sevindim! 🚀",
+        greeting2: "Projelerimi ve bağlantılarımı keşfet! 💡",
+        greeting3: "Bağlantıda kalalım! 🌐",
+        thanks: "Ziyaretin için teşekkürler! ✨",
+        lastUpdate: "Son güncelleme:",
+        age: "15 yaşında",
+        location: "Avusturya",
+        role: "Geliştirici",
+        privacy: "Gizlilik",
+    },
+    nl: {
+        aboutLabel: "Over mij:",
+        aboutText: "Hoi, ik ben Florian Feka (Flockii69), een gepassioneerde ontwikkelaar en techfan uit Oostenrijk. Hier vind je al mijn socials, projecten en contactmogelijkheden. Veel plezier!",
+        desc: "Al mijn links in één oogopslag!",
+        madeWith: "Gemaakt met",
+        inAustria: "in Oostenrijk",
+        searchPlaceholder: "Link zoeken...",
+        welcome: "Welkom op mijn pagina! 👋",
+        greeting1: "Leuk dat je er bent! 🚀",
+        greeting2: "Ontdek mijn projecten en links! 💡",
+        greeting3: "Laten we verbinden! 🌐",
+        thanks: "Bedankt voor je bezoek! ✨",
+        lastUpdate: "Laatste update:",
+        age: "15 jaar",
+        location: "Oostenrijk",
+        role: "Ontwikkelaar",
+        privacy: "Privacy",
+    },
+    pl: {
+        aboutLabel: "O mnie:",
+        aboutText: "Cześć, jestem Florian Feka (Flockii69), pasjonat programowania i technologii z Austrii. Tutaj znajdziesz wszystkie moje social media, projekty i kontakt. Miłego przeglądania!",
+        desc: "Wszystkie moje linki w jednym miejscu!",
+        madeWith: "Stworzone z",
+        inAustria: "w Austrii",
+        searchPlaceholder: "Szukaj linku...",
+        welcome: "Witaj na mojej stronie! 👋",
+        greeting1: "Miło cię widzieć! 🚀",
+        greeting2: "Odkryj moje projekty i linki! 💡",
+        greeting3: "Połączmy się! 🌐",
+        thanks: "Dzięki za odwiedziny! ✨",
+        lastUpdate: "Ostatnia aktualizacja:",
+        age: "15 lat",
+        location: "Austria",
+        role: "Programista",
+        privacy: "Prywatność",
+    },
+    uk: {
+        aboutLabel: "Про мене:",
+        aboutText: "Привіт, я Флоріан Фека (Flockii69), пристрасний розробник і шанувальник технологій з Австрії. Тут ви знайдете всі мої соцмережі, проекти та контакти. Гарного перегляду!",
+        desc: "Усі мої посилання в одному місці!",
+        madeWith: "Зроблено з",
+        inAustria: "в Австрії",
+        searchPlaceholder: "Пошук посилання...",
+        welcome: "Ласкаво просимо на мою сторінку! 👋",
+        greeting1: "Радий вас бачити! 🚀",
+        greeting2: "Відкрийте мої проекти та посилання! 💡",
+        greeting3: "Давайте зв'яжемося! 🌐",
+        thanks: "Дякую за візит! ✨",
+        lastUpdate: "Останнє оновлення:",
+        age: "15 років",
+        location: "Австрія",
+        role: "Розробник",
+        privacy: "Конфіденційність",
+    },
+    sv: {
+        aboutLabel: "Om mig:",
+        aboutText: "Hej, jag är Florian Feka (Flockii69), passionerad utvecklare och teknikentusiast från Österrike. Här hittar du alla mina sociala medier, projekt och kontaktmöjligheter. Trevlig surf!",
+        desc: "Alla mina länkar på ett ställe!",
+        madeWith: "Gjort med",
+        inAustria: "i Österrike",
+        searchPlaceholder: "Sök link...",
+        welcome: "Välkommen till min sida! 👋",
+        greeting1: "Kul att du är här! 🚀",
+        greeting2: "Upptäck mina projekt och länkar! 💡",
+        greeting3: "Låt oss kontakta! 🌐",
+        thanks: "Tack för besöket! ✨",
+        lastUpdate: "Senaste uppdatering:",
+        age: "15 år",
+        location: "Österrike",
+        role: "Utvecklare",
+        privacy: "Integritetspolicy",
+    },
+    ro: {
+        aboutLabel: "Despre mine:",
+        aboutText: "Salut, sunt Florian Feka (Flockii69), dezvoltator pasionat și fan al tehnologiei din Austria. Aici găsești toate rețelele mele, proiectele și modalitățile de contact. Spor la navigat!",
+        desc: "Toate link-urile mele dintr-o privire!",
+        madeWith: "Făcut cu",
+        inAustria: "în Austria",
+        searchPlaceholder: "Caută link...",
+        welcome: "Bine ai venit pe pagina mea! 👋",
+        greeting1: "Mă bucur că ești aici! 🚀",
+        greeting2: "Descoperă proiectele și link-urile mele! 💡",
+        greeting3: "Hai să ne conectăm! 🌐",
+        thanks: "Mulțumesc pentru vizită! ✨",
+        lastUpdate: "Ultima actualizare:",
+        age: "15 ani",
+        location: "Austria",
+        role: "Dezvoltator",
+        privacy: "Confidențialitate",
+    },
+    el: {
+        aboutLabel: "Σχετικά με εμένα:",
+        aboutText: "Γεια, είμαι ο Florian Feka (Flockii69), παθιασμένος προγραμματιστής και λάτρης της τεχνολογίας από την Αυστρία. Εδώ θα βρείτε όλα τα social μου, τα έργα και τα στοιχεία επικοινωνίας μου. Καλή περιήγηση!",
+        desc: "Όλοι οι σύνδεσμοί μου με μια ματιά!",
+        madeWith: "Φτιαγμένο με",
+        inAustria: "στην Αυστρία",
+        searchPlaceholder: "Αναζήτηση συνδέσμου...",
+        welcome: "Καλώς ήρθατε στη σελίδα μου! 👋",
+        greeting1: "Χαίρομαι που είστε εδώ! 🚀",
+        greeting2: "Ανακαλύψτε τα έργα και τους συνδέσμους μου! 💡",
+        greeting3: "Ας συνδεθούμε! 🌐",
+        thanks: "Ευχαριστώ για την επίσκεψη! ✨",
+        lastUpdate: "Τελευταία ενημέρωση:",
+        age: "15 ετών",
+        location: "Αυστρία",
+        role: "Προγραμματιστής",
+        privacy: "Απόρρητο",
+    },
+    hu: {
+        aboutLabel: "Rólam:",
+        aboutText: "Szia, Florian Feka (Flockii69) vagyok, lelkes fejlesztő és technológia rajongó Ausztriából. Itt megtalálod az összes közösségi oldalamat, projektjeimet és elérhetőségeimet. Jó böngészést!",
+        desc: "Minden linkem egy helyen!",
+        madeWith: "Készült",
+        inAustria: "Ausztriában",
+        searchPlaceholder: "Link keresése...",
+        welcome: "Üdvözöllek az oldalamon! 👋",
+        greeting1: "Örülök, hogy itt vagy! 🚀",
+        greeting2: "Fedezd fel a projektjeimet és linkjeimet! 💡",
+        greeting3: "Lépjünk kapcsolatba! 🌐",
+        thanks: "Köszönöm a látogatást! ✨",
+        lastUpdate: "Utolsó frissítés:",
+        age: "15 éves",
+        location: "Ausztria",
+        role: "Fejlesztő",
+        privacy: "Adatvédelem",
+    },
+    cs: {
+        aboutLabel: "O mně:",
+        aboutText: "Ahoj, jsem Florian Feka (Flockii69), vášnivý vývojář a fanoušek technologií z Rakouska. Zde najdeš všechny mé sociální sítě, projekty a kontakty. Příjemné prohlížení!",
+        desc: "Všechny mé odkazy na jednom místě!",
+        madeWith: "Vyrobeno s",
+        inAustria: "v Rakousku",
+        searchPlaceholder: "Hledat odkaz...",
+        welcome: "Vítej na mé stránce! 👋",
+        greeting1: "Jsem rád, že jsi tady! 🚀",
+        greeting2: "Objev moje projekty a odkazy! 💡",
+        greeting3: "Spojme se! 🌐",
+        thanks: "Děkuji za návštěvu! ✨",
+        lastUpdate: "Poslední aktualizace:",
+        age: "15 let",
+        location: "Rakousko",
+        role: "Vývojář",
+        privacy: "Ochrana osobních údajů",
+    },
+    da: {
+        aboutLabel: "Om mig:",
+        aboutText: "Hej, jeg er Florian Feka (Flockii69), passioneret udvikler og teknologientusiast fra Østrig. Her finder du alle mine sociale medier, projekter og kontaktmuligheder. God fornøjelse!",
+        desc: "Alle mine links på ét sted!",
+        madeWith: "Lavet med",
+        inAustria: "i Østrig",
+        searchPlaceholder: "Søg link...",
+        welcome: "Velkommen til min side! 👋",
+        greeting1: "Dejligt at du er her! 🚀",
+        greeting2: "Udforsk mine projekter og links! 💡",
+        greeting3: "Lad os forbinde! 🌐",
+        thanks: "Tak for besøget! ✨",
+        lastUpdate: "Seneste opdatering:",
+        age: "15 år",
+        location: "Østrig",
+        role: "Udvikler",
+        privacy: "Privatlivspolitik",
+    },
+    fi: {
+        aboutLabel: "Minusta:",
+        aboutText: "Hei, olen Florian Feka (Flockii69), intohimoinen kehittäjä ja tekniikan ystävä Itävallasta. Täältä löydät kaikki somekanavani, projektini ja yhteystietoni. Mukavaa selailua!",
+        desc: "Kaikki linkkini yhdellä silmäyksellä!",
+        madeWith: "Tehty rakkaudella",
+        inAustria: "Itävallassa",
+        searchPlaceholder: "Etsi linkki...",
+        welcome: "Tervetuloa sivulleni! 👋",
+        greeting1: "Kiva kun tulit! 🚀",
+        greeting2: "Tutustu projekteihini ja linkkeihini! 💡",
+        greeting3: "Ollaan yhteydessä! 🌐",
+        thanks: "Kiitos käynnistä! ✨",
+        lastUpdate: "Viimeisin päivitys:",
+        age: "15 vuotta",
+        location: "Itävalta",
+        role: "Kehittäjä",
+        privacy: "Tietosuoja",
+    },
+    ko: {
+        aboutLabel: "소개:",
+        aboutText: "안녕하세요, 저는 Florian Feka(Flockii69)입니다. 오스트리아 출신의 열정적인 개발자이자 기술 애호가입니다. 여기에서 저의 모든 소셜, 프로젝트, 연락처를 확인할 수 있습니다. 즐겁게 둘러보세요!",
+        desc: "모든 링크 한눈에 보기!",
+        madeWith: "사랑으로 만든",
+        inAustria: "오스트리아에서",
+        searchPlaceholder: "링크 검색...",
+        welcome: "내 페이지에 오신 것을 환영합니다! 👋",
+        greeting1: "와주셔서 기쁩니다! 🚀",
+        greeting2: "내 프로젝트와 링크를 확인하세요! 💡",
+        greeting3: "연락해요! 🌐",
+        thanks: "방문해 주셔서 감사합니다! ✨",
+        lastUpdate: "마지막 업데이트:",
+        age: "15세",
+        location: "오스트리아",
+        role: "개발자",
+        privacy: "개인정보 보호정책",
+    },
+    th: {
+        aboutLabel: "เกี่ยวกับฉัน:",
+        aboutText: "สวัสดี ฉันคือ Florian Feka (Flockii69) นักพัฒนาและผู้ที่ชื่นชอบเทคโนโลยีจากออสเตรีย ที่นี่คุณจะพบโซเชียล โปรเจกต์ และช่องทางติดต่อของฉันทั้งหมด ขอให้สนุกกับการท่องเว็บ!",
+        desc: "ลิงก์ทั้งหมดของฉันในพริบตาเดียว!",
+        madeWith: "สร้างด้วย",
+        inAustria: "ในออสเตรีย",
+        searchPlaceholder: "ค้นหาลิงก์...",
+        welcome: "ยินดีต้อนรับสู่หน้าของฉัน! 👋",
+        greeting1: "ดีใจที่คุณมา! 🚀",
+        greeting2: "ค้นหาโปรเจกต์และลิงก์ของฉัน! 💡",
+        greeting3: "เชื่อมต่อกันเถอะ! 🌐",
+        thanks: "ขอบคุณที่แวะมา! ✨",
+        lastUpdate: "อัปเดตล่าสุด:",
+        age: "15 ปี",
+        location: "ออสเตรีย",
+        role: "นักพัฒนา",
+        privacy: "นโยบายความเป็นส่วนตัว",
+    },
+    vi: {
+        aboutLabel: "Về tôi:",
+        aboutText: "Xin chào, tôi là Florian Feka (Flockii69), nhà phát triển đam mê và yêu thích công nghệ đến từ Áo. Tại đây bạn sẽ tìm thấy tất cả mạng xã hội, dự án và cách liên hệ với tôi. Chúc bạn duyệt web vui vẻ!",
+        desc: "Tất cả liên kết của tôi trong nháy mắt!",
+        madeWith: "Làm bằng",
+        inAustria: "tại Áo",
+        searchPlaceholder: "Tìm liên kết...",
+        welcome: "Chào mừng đến với trang của tôi! 👋",
+        greeting1: "Rất vui vì bạn đã đến! 🚀",
+        greeting2: "Khám phá các dự án và liên kết của tôi! 💡",
+        greeting3: "Kết nối nhé! 🌐",
+        thanks: "Cảm ơn bạn đã ghé thăm! ✨",
+        lastUpdate: "Cập nhật lần cuối:",
+        age: "15 tuổi",
+        location: "Áo",
+        role: "Nhà phát triển",
+        privacy: "Chính sách bảo mật",
+    },
+    sq: { // Albanisch
+        aboutLabel: "Rreth meje:",
+        aboutText: "Përshëndetje, unë jam Florian Feka (Flockii69), zhvillues i pasionuar dhe adhurues i teknologjisë nga Austria. Këtu do të gjeni të gjitha rrjetet e mia sociale, projektet dhe mënyrat e kontaktit. Shijoni shfletimin!",
+        desc: "Të gjitha lidhjet e mia në një vend!",
+        madeWith: "Bërë me dashuri",
+        inAustria: "në Austri",
+        searchPlaceholder: "Kërko lidhje...",
+        welcome: "Mirë se vini në faqen time! 👋",
+        greeting1: "Jam i lumtur që jeni këtu! 🚀",
+        greeting2: "Zbuloni projektet dhe lidhjet e mia! 💡",
+        greeting3: "Le të lidhemi! 🌐",
+        thanks: "Faleminderit për vizitën! ✨",
+        lastUpdate: "Përditësimi i fundit:",
+        age: "15 vjeç",
+        location: "Austri",
+        role: "Zhvillues",
+        privacy: "Privatësia",
+    }
+};
+
+        // Sprachumschaltung speichern und anwenden
+        document.getElementById('langSelect').addEventListener('change', () => {
+            const lang = document.getElement.getElementById('langSelect').value;
+            localStorage.setItem('selectedLang', lang);
+            translatePage();
+        });
+
+        // Sprache beim Laden anwenden
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'de';
+            const langSelect = document.getElementById('langSelect');
+            if (langSelect) {
+                langSelect.value = savedLang;
+                translatePage();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const greetings = [
+                "Willkommen auf meiner Seite! 👋",
+                "Schön, dass du da bist! 🚀",
+                "Entdecke meine Projekte und Links! 💡",
+                "Let's connect! 🌐"
+            ];
+            let idx = 0;
+            const heroGreeting = document.getElementById('heroGreeting');
+            function showGreeting() {
+                heroGreeting.textContent = greetings[idx];
+                idx = (idx + 1) % greetings.length;
+            }
+            showGreeting();
+            setInterval(showGreeting, 3500);
+        });
+        // Ergänze am Ende deines <script> Bereichs:
+// Ergänze am Ende deines <script> Bereichs:
+    function updateClock() {
+    const clock = document.getElementById('clock');
+    if (!clock) return;
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const s = now.getSeconds().toString().padStart(2, '0');
+    clock.textContent = `${h}:${m}:${s}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function updateClockAndDate() {
+    const clock = document.getElementById('clock');
+    const dateElem = document.getElementById('date');
+    if (!clock || !dateElem) return;
+
+    const lang = document.getElementById('langSelect')?.value || 'de';
+
+    // Wochentage für alle Sprachen
+    const daysByLang = {
+        de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+        it: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
+        ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        zh: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        ar: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+        pt: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        hi: ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'],
+        ja: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+        tr: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+        nl: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+        pl: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+        uk: ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П’ятниця', 'Субота'],
+        sv: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+        ro: ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'],
+        el: ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'],
+        hu: ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'],
+        cs: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
+        da: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+        fi: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
+        ko: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+        th: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+        vi: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
+        sq: ['E diel', 'E hënë', 'E martë', 'E mërkurë', 'E enjte', 'E premte', 'E shtunë'],
+    };
+
+    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const s = now.getSeconds().toString().padStart(2, '0');
+    clock.textContent = `${h}:${m}:${s}`;
+
+    const days = daysByLang[lang] || daysByLang['de'];
+    const day = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+
+    let emoji = '🌞';
+    if (h >= 12 && h < 18) emoji = '🌤️';
+    else if (h >= 18 && h < 22) emoji = '🌙';
+    else if (h >= 22 || h < 6) emoji = '🌌';
+
+    dateElem.textContent = `${emoji} ${day}, ${date}. ${month} ${year}`;
+}
+setInterval(updateClockAndDate, 1000);
+updateClockAndDate();
+
+// Uhr und Datum beim Scrollen ausblenden
+const topLeft = document.querySelector('.top-left');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY) {
+        topLeft.classList.add('hidden'); // Ausblenden beim Scrollen nach unten
+    } else {
+        topLeft.classList.remove('hidden'); // Einblenden beim Scrollen nach oben
+    }
+});
+
+function translatePage() {
+    const lang = document.getElementById('langSelect').value;
+    const t = translations[lang] || translations['de'];
+
+    // Über mich
+    const aboutLabel = document.getElementById('aboutLabel');
+    if (aboutLabel) aboutLabel.textContent = t.aboutLabel;
+    const aboutText = document.getElementById('aboutText');
+    if (aboutText) aboutText.textContent = t.aboutText;
+
+    // Beschreibung
+    const descElem = document.querySelector('.desc');
+    if (descElem) descElem.textContent = t.desc;
+
+    // Footer
+    const madeWithElem = document.getElementById('footer-madewith');
+    const inAustriaElem = document.getElementById('footer-inaustria');
+    if (madeWithElem) madeWithElem.textContent = t.madeWith;
+    if (inAustriaElem) inAustriaElem.textContent = t.inAustria;
+
+    // Suchfeld
+    const searchInput = document.getElementById('linkSearch');
+    if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+
+    // Hero-Greeting (optional, falls du das rotierend übersetzen willst)
+    const greetings = [t.welcome, t.greeting1, t.greeting2, t.greeting3];
+    let idx = 0;
+    const heroGreeting = document.getElementById('heroGreeting');
+    if (heroGreeting) {
+        function showGreeting() {
+            heroGreeting.textContent = greetings[idx];
+            idx = (idx + 1) % greetings.length;
+        }
+        showGreeting();
+        clearInterval(window.heroGreetingInterval);
+        window.heroGreetingInterval = setInterval(showGreeting, 3500);
+    }
+
+    // Danke fürs Vorbeischauen!
+    const thanksElem = document.querySelector('.thanks');
+    if (thanksElem) thanksElem.textContent = t.thanks;
+
+    // Letzte Aktualisierung
+    const lastUpdateElem = document.querySelector('.footer-version');
+    if (lastUpdateElem) {
+        const version = document.getElementById('version-number')?.textContent || '';
+        const date = document.getElementById('footer-date-version')?.textContent || '';
+        lastUpdateElem.innerHTML = `Version <span id="version-number">${version}</span> &ndash; ${t.lastUpdate} <span id="footer-date-version">${date}</span>`;
+    }
+
+    
+    // Profilangaben übersetzen
+    const ageElem = document.getElementById('profile-age');
+    if (ageElem) ageElem.innerHTML = `<i class="fas fa-birthday-cake"></i> ${t.age}`;
+    const locationElem = document.getElementById('profile-location');
+    if (locationElem) locationElem.textContent = t.location;
+    const roleElem = document.getElementById('profile-role');
+    if (roleElem) roleElem.textContent = t.role;
+´´
+    // Datenschutz-Link im Footer übersetzen
+    const privacyLink = document.querySelector('footer a[href="privacy.html"]');
+    if (privacyLink && t.privacy) privacyLink.textContent = t.privacy;
+    
+    updateClockAndDate();
+}
+
+// Sprachumschaltung speichern und anwenden
+document.getElementById('langSelect').addEventListener('change', () => {
+    const lang = document.getElementById('langSelect').value;
+    localStorage.setItem('selectedLang', lang);
+    translatePage();
+});
+
+// Sprache beim Laden anwenden
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('selectedLang') || 'de';
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect) {
+        langSelect.value = savedLang;
+        translatePage();
+    }
+});
     </script>
 </body>
 </html>
